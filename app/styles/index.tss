@@ -14,11 +14,6 @@
     height: Ti.UI.SIZE
 }
 
-".blue": {
-    backgroundColor: "blue"
-}
-
-
 "#nameField": {
     top: 10,
     width: "90%",

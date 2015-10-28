@@ -1,3 +1,5 @@
+var Tools = require('tools');
+
 var application = {
     device:    Ti.Platform.name,
     MapModule: require('ti.map'),
@@ -5,8 +7,6 @@ var application = {
     coords:    null,
     photoPath: null
 }
-
-var Tools = require('tools');
 
 application.toggleClass = function(element, addClass, removeClass) {
     $.addClass(element, addClass);
@@ -17,7 +17,7 @@ application.getLocation = function() {
     if (Ti.Geolocation.locationServicesEnabled) {
         Ti.Geolocation.getCurrentPosition(function(e) {
             if (e.success) {
-                Ti.API.info('Latitude : ' + e.coords.latitude);
+                Ti.API.info('Latitude : '  + e.coords.latitude);
                 Ti.API.info('Longitude : ' + e.coords.longitude);
                 application.coords = e.coords;
             } else {
@@ -28,7 +28,6 @@ application.getLocation = function() {
         alert('Service de Geolocation désactivé');
     }
 }
-
 
 application.handleLocation = function() {
     // Remove location if already set
@@ -45,8 +44,6 @@ application.handleLocation = function() {
         // Get location
         application.getLocation();
         // Set view to location
-        console.log('application coords handleLocation');
-        console.log(application.coords);
         if (application.coords) {
             application.mapview.setLocation({
                 latitude:       application.coords.latitude,
@@ -59,10 +56,7 @@ application.handleLocation = function() {
             application.toggleClass($.locationButton, "locationButtonSelected", "locationButton");
             // Add location annotation
             Tools.setAnnotation(application.MapModule, application.mapview, application.coords);
-        } else {
-            alert('Service de Geolocation désactivé');
         }
-
     }
 }
 
@@ -70,24 +64,26 @@ application.handleCamera = function() {
     if (application.device == "android") {
         Titanium.Media.showCamera({
             success: function(e) {
-                console.log(e);
                 // Set photo
-                application.photoPath = e.media.nativePath;
-                $.photoButton.backgroundImage = application.photoPath;
+                // application.photoPath = e.media.nativePath;
+                $.photoButton.backgroundImage = application.photoPath = e.media.nativePath;
                 // Get Location
                 application.getLocation();
-                // Update UI
-                application.toggleClass($.locationButton, "locationButtonSelected", "locationButton");
-                // Update mapView
-                application.mapview.setLocation({
-                    latitude:       application.coords.latitude,
-                    longitude:      application.coords.longitude,
-                    animate:        true,
-                    latitudeDelta:  0.01,
-                    longitudeDelta: 0.01
-                });
-                // Add location annotation
-                Tools.setAnnotation(application.MapModule, application.mapview, application.coords);
+
+                if (application.coords != null) {      
+                    // Update UI
+                    application.toggleClass($.locationButton, "locationButtonSelected", "locationButton");
+                    // Update mapView
+                    application.mapview.setLocation({
+                        latitude:       application.coords.latitude,
+                        longitude:      application.coords.longitude,
+                        animate:        true,
+                        latitudeDelta:  0.01,
+                        longitudeDelta: 0.01
+                    });
+                    // Add location annotation
+                    Tools.setAnnotation(application.MapModule, application.mapview, application.coords);
+                }
             },
             cancel: function(e) {
 
@@ -99,23 +95,6 @@ application.handleCamera = function() {
             },
             mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
         })
-    } else if (application.device == 'iPhone OS') {
-        Titanium.Media.showCamera({
-            success:function(event) {
-
-            },
-            cancel:function() {
-
-            },
-            error:function(error) {
-                var a = Titanium.UI.createAlertDialog({title:'Camera'});
-                a.setMessage('Une erreur est survenue');
-                a.show();
-            },
-            saveToPhotoGallery:false,
-            allowEditing:false,
-            mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
-        });
     }
 }
 
@@ -131,9 +110,6 @@ application.sendData = function() {
         a.show();
     } else {
         // Save location and photo into DB
-        console.log('application coords send data');
-        console.log(application.coords);
-
         var locationPoint = Alloy.createModel('locationPoint', {
             name:      name, 
             latitude:  application.coords.latitude, 
@@ -143,9 +119,7 @@ application.sendData = function() {
         });
 
         if (locationPoint.isValid()) {
-            console.log('VALID');
             locationPoint.save();
-            console.log(locationPoint);
 
             $.nameField.value = '';
             application.coords = null;
@@ -157,7 +131,6 @@ application.sendData = function() {
             a.setMessage('Votre point a été enregistré');
             a.show();
         } else {
-            console.log('INVALID');
             locationPoint.destroy();
         }
 
