@@ -1,0 +1,14 @@
+<Alloy>
+    <Collection src='locationPoint' />
+    <Window id='locationList' class="container">
+        <TableView id='tableView' dataCollection='locationPoint' dataTransform="transformData">
+            <TableViewRow id='cc' dataId="{id}" class='tableRow'>
+                <ImageView image='{photoPath}' class="hasPhoto">
+                </ImageView>
+                <Label class='tableName'>{name}</Label>
+                <Label class='tableDate'>{formatedDate}</Label>
+                <Label class='tableTime'>{formatedTime}</Label>
+            </TableViewRow>
+        </TableView>
+    </Window>
+</Alloy>

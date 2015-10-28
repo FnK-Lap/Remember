@@ -1,0 +1,16 @@
+<Alloy>
+    <Window class="container">
+        <View class='row' id='map'></View>
+        <View class='row'>
+            <TextField id="nameField" />
+        </View>
+        <View class="row buttons-location">
+            <Button id="locationButton" class="locationButton"></Button>
+            <Button id="photoButton" class="photoButton"></Button>
+        </View>
+        <View>
+            <Button id='sendButton'>Enregistrer ma position</Button>
+            <Button id='menuButton'></Button>
+        </View>
+    </Window>
+</Alloy>

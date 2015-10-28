@@ -1,0 +1,27 @@
+<Alloy>
+    <Window id='locationDetail' class="container">
+        <AlertDialog id="alertDelete" title="Supprimer"
+            message="Voulez-vous supprimer ce lieu ?" cancel="1">
+            <ButtonNames>
+                <ButtonName>Supprimer</ButtonName>
+                <ButtonName>Annuler</ButtonName>
+            </ButtonNames>
+        </AlertDialog>
+
+
+        <View class='row'>
+            <Label id='nameLabel'></Label>
+        </View>
+        <View class='row' id='map'></View>
+        <View class='row'>
+            <View class='row'> 
+                <ImageView if='$.args.get("photoPath")' id='photoThumb' />
+            </View>
+            <View id='datetime'>
+                <Label id='dateLabel'></Label>
+                <Label id='timeLabel'></Label>
+                <Button id='trashButton'></Button>
+            </View>
+        </View>
+    </Window>
+</Alloy>

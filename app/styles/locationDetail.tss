@@ -1,0 +1,58 @@
+".container": {
+    backgroundColor: 'white',
+    layout: 'vertical',
+    height: Ti.UI.FILL
+}
+
+".row": {
+    layout: 'horizontal',
+    top: 0,
+    width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE
+}
+
+"#nameLabel": {
+    width: "90%",
+    color: "black",
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+    font: {
+        fontSize: 18
+    },
+    top: 5
+}
+
+"#map": {
+    top: 5,
+    height: "50%"
+}
+
+"#photoThumb": {
+    width: 200,
+    top: 30,
+    left: 10
+}
+
+"#datetime": {
+    top: 0,
+    left: 20,
+    width: Ti.UI.FILL,
+    height: Ti.UI.SIZE,
+    layout: 'vertical',
+}
+
+"#dateLabel": {
+    top: 60,
+    color: 'black'
+}
+
+"#timeLabel": {
+    top: 30,
+    color: 'black'
+}
+
+"#trashButton": {
+    top: 10,
+    backgroundImage: "/images/trash.png",
+    width: 25,
+    height: 25,
+}
